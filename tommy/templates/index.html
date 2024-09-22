@@ -10,8 +10,8 @@
         <form method="post" class="flex flex-col sm:flex-row items-center w-full sm:w-auto">
             <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
                 <!-- Adjusted Search Box width for responsiveness -->
-                <input type="text" name="query" class="p-2 rounded-l-lg sm:rounded-l-lg sm:rounded-none border-none outline-none bg-gray-800 text-white w-full sm:w-96"
-                       placeholder="Enter a word or phrase here" value="{{ query }}">
+                <input type="text" id="search-input" name="query" class="p-2 rounded-l-lg sm:rounded-l-lg sm:rounded-none border-none outline-none bg-gray-800 text-white w-full sm:w-96"
+                       placeholder="Enter a word or phrase here" value="{{ query }}" oninput="toggleSearchButton()">
             </div>
             <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
                 <select name="narrator" class="p-2 bg-gray-700 text-white rounded-r-lg sm:rounded-none sm:rounded-r-lg w-full sm:w-auto">
@@ -20,7 +20,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="ml-0 sm:ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg w-full sm:w-auto">Search</button>
+            <button type="submit" id="search-button" class="ml-0 sm:ml-2 px-4 py-2 bg-gray-500 text-gray-300 rounded-lg w-full sm:w-auto cursor-not-allowed" disabled>Search</button>
         </form>
     </div>
 
@@ -53,4 +53,28 @@
 {% endif %}
 
 <div class="mb-20"></div> <!-- Added bottom padding to separate last card from bottom of page -->
+
+<!-- JavaScript for enabling/disabling the search button -->
+<script>
+    function toggleSearchButton() {
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        if (searchInput.value.trim() !== '') {
+            // Enable the button if the search input has text
+            searchButton.disabled = false;
+            searchButton.classList.remove('bg-gray-500', 'text-gray-300', 'cursor-not-allowed');
+            searchButton.classList.add('bg-blue-600', 'text-white', 'cursor-pointer');
+        } else {
+            // Disable the button if the search input is empty
+            searchButton.disabled = true;
+            searchButton.classList.remove('bg-blue-600', 'text-white', 'cursor-pointer');
+            searchButton.classList.add('bg-gray-500', 'text-gray-300', 'cursor-not-allowed');
+        }
+    }
+
+    // Initial check to disable the button if the page is loaded with empty input
+    document.addEventListener('DOMContentLoaded', () => {
+        toggleSearchButton();
+    });
+</script>
 {% endblock %}
