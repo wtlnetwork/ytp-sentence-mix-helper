@@ -18,7 +18,8 @@ def create_app():
             'https://cdn.tailwindcss.com'
         ],
         'script-src': [
-            '\'self\''
+            '\'self\'',
+            'https://cdn.tailwindcss.com'
         ],
         'img-src': [
             "'self'"
