@@ -2,8 +2,8 @@
 tools/
 .idea/
 node_modules/
-src/styles.css
 package.json
 package-lock.json
 postcss.config.js
 tailwind.config.js
+source/
