@@ -1,5 +1,6 @@
 import string
 
+from collections import OrderedDict
 from flask import Blueprint, render_template, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -73,16 +74,16 @@ def api_search():
             Subtitle.series, Subtitle.episode_number).all()
 
     response_data = [
-        {
-            'series': result.series,
-            'episode_number': result.episode_number,
-            'episode_title': result.episode_title,
-            'region': result.region.upper(),
-            'narrator': narrator_lookup.get(result.narrator, result.narrator),
-            'line': result.line,
-            'start_time': result.start_time,
-            'end_time': result.end_time
-        }
+        OrderedDict([
+            ('series', result.series),
+            ('episode_number', result.episode_number),
+            ('episode_title', result.episode_title),
+            ('region', result.region.upper()),
+            ('narrator', narrator_lookup.get(result.narrator, result.narrator)),
+            ('line', result.line),
+            ('start_time', result.start_time),
+            ('end_time', result.end_time)
+        ])
         for result in results
     ]
 
