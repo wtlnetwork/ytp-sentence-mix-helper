@@ -1,24 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="flex flex-col items-center mt-10"> <!-- Keep mt-10 if you want the content to start lower on the page -->
+<div class="flex flex-col items-center mt-10">
     <!-- Heading without extra margin -->
     <h1 class="text-3xl font-bold text-white mb-2">Thomas Sentence Mix Helper</h1>
 
     <!-- Search Box -->
-    <div class="flex justify-center mb-6 mt-10"> <!-- Removed items-center and adjusted mb-10 to mb-6 -->
-        <form method="post" class="flex items-center">
-            <div class="relative">
-                <!-- Search Box width -->
-                <input type="text" name="query" class="p-2 rounded-l-lg border-none outline-none bg-gray-800 text-white w-96"
+    <div class="flex flex-col sm:flex-row justify-center mb-6 mt-10 w-full px-4 sm:px-0">
+        <form method="post" class="flex flex-col sm:flex-row items-center w-full sm:w-auto">
+            <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+                <!-- Adjusted Search Box width for responsiveness -->
+                <input type="text" name="query" class="p-2 rounded-l-lg sm:rounded-l-lg sm:rounded-none border-none outline-none bg-gray-800 text-white w-full sm:w-96"
                        placeholder="Enter a word or phrase here" value="{{ query }}">
             </div>
-            <select name="narrator" class="p-2 bg-gray-700 text-white rounded-r-lg">
-                {% for name, value in narrators.items() %}
-                <option value="{{ value }}" {% if value == selected_narrator %}selected{% endif %}>{{ name }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg">Search</button>
+            <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+                <select name="narrator" class="p-2 bg-gray-700 text-white rounded-r-lg sm:rounded-none sm:rounded-r-lg w-full sm:w-auto">
+                    {% for name, value in narrators.items() %}
+                    <option value="{{ value }}" {% if value == selected_narrator %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="ml-0 sm:ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg w-full sm:w-auto">Search</button>
         </form>
     </div>
 
