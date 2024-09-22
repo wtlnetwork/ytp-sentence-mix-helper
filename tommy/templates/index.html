@@ -1,3 +1,4 @@
+<!-- Updated index.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -7,8 +8,9 @@
     <div class="flex flex-col sm:flex-row justify-center mb-6 mt-10 w-full px-4 sm:px-0">
         <form method="post" class="flex flex-col sm:flex-row items-center w-full sm:w-auto">
             <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+                <!-- Removed oninput="toggleSearchButton()" -->
                 <input type="text" id="search-input" name="query" class="p-2 rounded-l-lg sm:rounded-l-lg sm:rounded-none border-none outline-none bg-gray-800 text-white w-full sm:w-96"
-                       placeholder="Enter a word or phrase here" value="{{ query }}" oninput="toggleSearchButton()">
+                       placeholder="Enter a word or phrase here" value="{{ query }}">
             </div>
             <div class="relative flex-grow mb-4 sm:mb-0 sm:mr-2 w-full sm:w-auto">
                 <select name="narrator" class="p-2 bg-gray-700 text-white rounded-r-lg sm:rounded-none sm:rounded-r-lg w-full sm:w-auto">

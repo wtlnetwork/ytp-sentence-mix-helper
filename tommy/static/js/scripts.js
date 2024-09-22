@@ -12,7 +12,11 @@ function toggleSearchButton() {
     }
 }
 
-// Initial check to disable the button if the page is loaded with empty input
+// Attach event listener to the input field on DOM content loaded
 document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', toggleSearchButton);
+
+    // Initial check to disable the button if the page is loaded with empty input
     toggleSearchButton();
 });
