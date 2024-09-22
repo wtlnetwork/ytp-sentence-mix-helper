@@ -21,19 +21,23 @@ def create_app():
     def generate_nonce(length=16):
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
+    talisman = Talisman(app)
+
     @app.before_request
     def set_csp_nonce():
+        # Generate a nonce for this request
         nonce = generate_nonce()
         request.csp_nonce = nonce
 
-    csp = {
-        'default-src': '\'self\'',
-        'style-src': [f'\'self\'', f'\'nonce-{request.csp_nonce}\'', 'https://cdn.jsdelivr.net'],
-        'script-src': [f'\'self\'', f'\'nonce-{request.csp_nonce}\'']
-    }
+        # Define CSP with the generated nonce
+        csp = {
+            'default-src': '\'self\'',
+            'style-src': [f'\'self\'', f'\'nonce-{nonce}\'', 'https://cdn.jsdelivr.net'],
+            'script-src': [f'\'self\'', f'\'nonce-{nonce}\'']
+        }
 
-    # Initialize Flask-Talisman to enforce HTTPS
-    Talisman(app, content_security_policy=csp)
+        # Apply the CSP dynamically to the current request
+        talisman.content_security_policy = csp
 
     # Import models to register them with SQLAlchemy
     with app.app_context():
