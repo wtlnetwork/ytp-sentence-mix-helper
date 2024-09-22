@@ -1,8 +1,7 @@
-from . import db  # Import the db object from __init__.py
+from . import db
 
-# Define the model to map to the 'subtitles' table
 class Subtitle(db.Model):
-    __tablename__ = 'subtitles'  # Ensure it uses the 'subtitles' table
+    __tablename__ = 'subtitles'
 
     id = db.Column(db.Integer, primary_key=True)
     series = db.Column(db.Integer)
