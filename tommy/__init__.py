@@ -1,4 +1,7 @@
-from flask import Flask
+import random
+import string
+
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from flask_talisman import Talisman
@@ -14,14 +17,19 @@ def create_app():
     # Initialize the app with SQLAlchemy
     db.init_app(app)
 
+    # Function to generate a random nonce
+    def generate_nonce(length=16):
+        return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+    @app.before_request
+    def set_csp_nonce():
+        nonce = generate_nonce()
+        request.csp_nonce = nonce
+
     csp = {
-        'default-src': [
-            '\'self\''
-        ],
-        'style-src': [
-            '\'self\'',
-            'https://cdn.jsdelivr.net'  # Allow Tailwind CSS from jsdelivr
-        ]
+        'default-src': '\'self\'',
+        'style-src': [f'\'self\'', f'\'nonce-{request.csp_nonce}\'', 'https://cdn.jsdelivr.net'],
+        'script-src': [f'\'self\'', f'\'nonce-{request.csp_nonce}\'']
     }
 
     # Initialize Flask-Talisman to enforce HTTPS
