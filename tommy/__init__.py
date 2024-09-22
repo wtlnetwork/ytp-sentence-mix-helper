@@ -12,14 +12,12 @@ def create_app():
     db.init_app(app)
 
     csp = {
-        'default-src': '\'self\'',
+        'default-src': "'self'",
         'style-src': [
-            '\'self\'',
-            'https://cdn.tailwindcss.com'
+            "'self'"
         ],
         'script-src': [
-            '\'self\'',
-            'https://cdn.tailwindcss.com'
+            "'self'"
         ],
         'img-src': [
             "'self'"
