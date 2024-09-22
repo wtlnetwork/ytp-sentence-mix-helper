@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from flask_talisman import Talisman
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 db = SQLAlchemy()
 
@@ -34,6 +36,12 @@ def create_app():
     }
 
     talisman = Talisman(app, content_security_policy=csp)
+
+    limiter = Limiter(
+        get_remote_address,
+        app=app,
+        default_limits=[]
+    )
 
     with app.app_context():
         from . import models
